@@ -1,0 +1,129 @@
+---
+title: "MSstatsQCgui: A shiny app for longitudinal quality monitoring for proteomic experiments"
+author:
+  - "Eralp DOGU <eralp.dogu@gmail.com>" 
+  - "Sara TAHERI <srtaheri66@gmail.com>" 
+  - "Olga VITEK <o.vitek@neu.edu>" 
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MSstatsQCgui}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction 
+
+`MSstatsQCgui` translates the modern methods of longitudinal statistical process control, such as simultaneous and time weighted control charts and change point analysis to the context of LC-MS experiments. Details can be found via [MSstatsQC](www.msstats.org/msstatsqc) website and project [github repository](https://github.com/eralpdogu/MSstatsQCgui), and are available for use stand-alone, or for integration with automated pipelines. 
+
+This vignette summarizesfunctionalities in `MSstatsQCgui` package. 
+
+The GUI was created using [Shiny](https://shiny.rstudio.com/), 
+a Web Application Framework for R, and uses
+several packages to provide advanced features that can enhance Shiny apps, 
+such as [shinyjs](https://github.com/daattali/shinyjs). A running version of the GUI is found in [MSstatsQCgui](https://eralpdogu.shinyapps.io/msstatsqc/)
+
+## Installation
+To install the package from the [Bioconductor repository](http://bioconductor.org/packages/MSstatsQCGUI/) please use the following
+code. 
+```{r,eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+biocLite("MSstatsQCgui")
+```
+
+To install the development version of the package via GitHub:
+
+```{r, eval = FALSE}
+source("https://bioconductor.org/biocLite.R")
+deps <- c("devtools")
+biocLite("devtools", dependencies = TRUE)
+devtools::install_github("eralpdogu/MSstatsQCGUI")
+```
+
+## Quick start
+
+The following commands should be used to start the graphical user interface.
+
+```{r, eval = FALSE}
+library(MSstatsQCGUI)
+RunMSstatsQC()
+```
+
+## Input
+
+In order to analyze quality control data in `MSstatsQCgui`, input data must be a .csv file in a "long" format with related columns. This is a common data format that can be generated from spectral processing tools such as Skyline and Panorama AutoQC.
+
+The recommended format includes `Acquired Time`, `Peptide name`, `Annotations` and data for any QC metrics such as `Retention Time`, `Total Peak Area` and `Mass Accuracy` etc. Each input file should include `Acquired Time`, `Peptide name` and `Annotations`. After the `Annotations` column user can parse any metric of interest with a proper column name. `MSstatsQCgui` can analyze 20 metrics simultaneously. 
+
+(a) `AcquiredTime`: This column shows the acquired time of the QC/SST sample in the format of MM/DD/YYYY HH:MM:SS AM/PM. European date parser is also accepted.
+
+(b) `Precursor`: This column shows information about Precursor id. Statistical analysis will be done separately for each unique label in this column. 
+
+(c) `Annotations`: Annotations are free-text information given by the analyst about each run. They can be informative explanations of any special cause or any observations related to a particular run. Annotations are carried in the plots provided by `MSstatsQC` interactively.  
+
+(d)-(f) `RetentionTime`, `TotalPeakArea`, `FWHM`, `MassAccuracy`, and `PeakAssymetry`, and other metrics: These columns define a *feature* of a peak for a specific peptide. 
+
+Example dataset was generated during CPTAC Study 9.1 at Site 54. Although the example focus on targeted proteomics, the statistical methods more generally apply. Each row corresponds to a single time point. 
+
+## Data import 
+
+`Data import` tab is used to import data.  User can also run the app with sample data and clear the outputs with the clear button.
+
+* `Run with sample data` : Click to run MSstatsQC with sample data from CPTAC Study 9.1.
+* `Clear data and plots` : Click to clear all data and plots.
+
+See [Input Example](https://github.com/eralpdogu/MSstatsQC/blob/master/vignettes/1.input_example.png)
+
+## Data process
+
+`Data import` tab automatically checks data and validate it for further use.  
+
+## Options
+
+`Options` tab is used to set metrics and peptides of interest. Guide set and known mean and standard deviation are also set within "Options" tab. User should select a proper and representative guide set using `Options` tab. The lower bound of guide set indicates the index of the first time point to be included in the guide set. For example, if you choose "1" as a lower bound, it means that first time point will be the first element of the guide set. Similarly, upper bound of guide set shows the index for the last observation. It is possible to use different guide sets for different metrics and peptides.   
+
+See [MSstatsQC Option Tab](https://github.com/eralpdogu/MSstatsQC/blob/master/vignettes/2.options_example.png)
+
+## Control charts and change point analysis
+
+`Control charts` tab is used to construct X and mR and CUSUMm and CUSUMv control charts.
+
+See [XmR Chart Tab](https://github.com/eralpdogu/MSstatsQC/blob/master/vignettes/3.XmRChartTAA.png)
+
+See [CUSUMm and CUSUMv Charts Tab](https://github.com/eralpdogu/MSstatsQC/blob/master/vignettes/4.CUSUMforTAA.png)
+
+See [Change Point Estimation Tab](https://github.com/eralpdogu/MSstatsQC/blob/master/vignettes/5.CPforTAA.png)
+
+## Summary functions: river and radar plots
+
+Summary plots are available in the `Metric summary` tab under `Detailed performance: plot summaries`.
+
+See [Plot Summaries Output](https://github.com/eralpdogu/MSstatsQC/blob/master/vignettes/6.RiverRadar.png)
+
+See [Input Example for Desicision Map](https://github.com/eralpdogu/MSstatsQC/blob/master/vignettes/7.DecisionInput.png)
+
+See [Decision Map Output](https://github.com/eralpdogu/MSstatsQC/blob/master/vignettes/8.Decisionmaps.png)
+
+## Output
+
+Plots created by the core plot functions are generated by [plotly](https://plot.ly/r/) which is an R package for interactive plot generation. Each output generated by 'plotly' can be saved using the "plotly" toolset.
+
+## Project website
+Please use [MSstats.org/MSstatsQC](https://www.MSstats.org/MSstatsQC) and [github repository](https://github.com/eralpdogu/MSstatsQCgui) for further details about this tool.
+
+## Question and issues
+Please use [Google group](https://groups.google.com/forum/#!forum/msstatsqc) if you want to file bug reports or feature requests.
+
+## Citation
+
+Please cite MSstatsQCGUI: 
+
+* Dogu E, Mohammed-Taheri S, Vitek O. "MSstatsQCgui: A Graphical User Interface to analyze quality control data for proteomic experiments."Work in progress.
+
+# Session information
+
+```{r si}
+sessionInfo()
+```
+
+

@@ -14,7 +14,10 @@ This function allows you to draw the heatmaps to help user test their decision i
  This plot provides massages about overall system performance.
 }
 \examples{
-\dontrun{ RunMSstatsQC() }
+\dontrun{An example dataset can be found through MSstatsQC package}
+library(MSstatsQC)
+data <- MSstatsQC::S9Site54
+\dontrun{RunMSstatsQC()}
 }
 \keyword{GUI}
 \keyword{shiny}
