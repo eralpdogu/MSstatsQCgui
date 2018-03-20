@@ -12,20 +12,21 @@ attached base packages:
 [1] grid      stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] extrafont_0.17       viridis_0.5.0        viridisLite_0.3.0    tidyr_0.8.0          scales_0.5.0        
- [6] dplyr_0.7.4          ggExtra_0.7          gridExtra_2.3        hash_2.2.6           RecordLinkage_0.4-10
-[11] ffbase_0.12.3        ff_2.2-13            bit_1.1-12           RSQLite_2.0          DBI_0.8             
-[16] shinyjs_1.0          shinythemes_1.1.1    markdown_0.8         plotly_4.7.1         ggplot2_2.2.1       
-[21] shinyBS_0.61         shiny_1.0.5         
+ [1] bindrcpp_0.2         extrafont_0.17       viridis_0.5.0        viridisLite_0.3.0    tidyr_0.8.0         
+ [6] scales_0.5.0         dplyr_0.7.4          ggExtra_0.7          gridExtra_2.3        hash_2.2.6          
+[11] RecordLinkage_0.4-10 ffbase_0.12.3        ff_2.2-13            bit_1.1-12           RSQLite_2.0         
+[16] DBI_0.8              shinyjs_1.0          shinythemes_1.1.1    markdown_0.8         plotly_4.7.1        
+[21] ggplot2_2.2.1        shinyBS_0.61         shiny_1.0.5         
 
 loaded via a namespace (and not attached):
  [1] Rcpp_0.12.15        lattice_0.20-35     class_7.3-14        assertthat_0.2.0    digest_0.6.15      
  [6] ipred_0.9-6         mime_0.5            R6_2.2.2            plyr_1.8.4          ada_2.0-5          
 [11] e1071_1.6-8         httr_1.3.1          pillar_1.2.1        rlang_0.2.0         lazyeval_0.2.1     
 [16] data.table_1.10.4-3 miniUI_0.1.1        extrafontdb_1.0     blob_1.1.0          rpart_4.1-11       
-[21] Matrix_1.2-12       splines_3.4.3       htmlwidgets_1.0     munsell_0.4.3       compiler_3.4.3     
-[26] httpuv_1.3.6.2      pkgconfig_2.0.1     htmltools_0.3.6     nnet_7.3-12         evd_2.3-2          
-[31] tibble_1.4.2        prodlim_1.6.1       MASS_7.3-47         Rttf2pt1_1.3.6      jsonlite_1.5       
-[36] xtable_1.8-2        gtable_0.2.0        magrittr_1.5        bindrcpp_0.2        fastmatch_1.1-0    
-[41] lava_1.6            tools_3.4.3         bit64_0.9-7         glue_1.2.0          purrr_0.2.4        
-[46] survival_2.41-3     yaml_2.1.18         colorspace_1.3-2    memoise_1.1.0       bindr_0.1.1        
+[21] Matrix_1.2-12       labeling_0.3        splines_3.4.3       htmlwidgets_1.0     munsell_0.4.3      
+[26] compiler_3.4.3      httpuv_1.3.6.2      pkgconfig_2.0.1     htmltools_0.3.6     nnet_7.3-12        
+[31] evd_2.3-2           tibble_1.4.2        prodlim_1.6.1       MASS_7.3-47         Rttf2pt1_1.3.6     
+[36] jsonlite_1.5        xtable_1.8-2        gtable_0.2.0        magrittr_1.5        fastmatch_1.1-0    
+[41] lava_1.6            RColorBrewer_1.1-2  Cairo_1.5-9         tools_3.4.3         bit64_0.9-7        
+[46] glue_1.2.0          purrr_0.2.4         crosstalk_1.0.0     survival_2.41-3     yaml_2.1.18        
+[51] colorspace_1.3-2    memoise_1.1.0       bindr_0.1.1        
