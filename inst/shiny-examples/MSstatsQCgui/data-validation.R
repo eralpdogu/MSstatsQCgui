@@ -101,7 +101,7 @@ input.sanity.check <- function(prodata, processout, finalfile) {
         #}
     }
   }
-  
+
   if(error_message != "") {
     #return(paste(error_message, "Please check the values to make sure all the inputs are numeric and positive and then try again."))
     return(paste(error_message))
@@ -161,7 +161,7 @@ input_checking <- function(data){
   processout <- rbind(processout, as.matrix(c(" "," ","MSstatsqc - dataProcess function"," "),ncol=1))
 
   data <- input.sanity.check(data, processout, finalfile)
-
+  data <- data[complete.cases(data),] #work with complete cases
 
   return(data)
 }
