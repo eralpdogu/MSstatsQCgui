@@ -1,0 +1,27 @@
+R version 3.3.2 (2016-10-31)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+Running under: OS X El Capitan 10.11.6
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] grid      stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] bindrcpp_0.2         extrafont_0.17       viridis_0.4.0        viridisLite_0.2.0    tidyr_0.7.2         
+ [6] scales_0.5.0         dplyr_0.7.4          ggExtra_0.7          gridExtra_2.3        hash_2.2.6          
+[11] RecordLinkage_0.4-10 ffbase_0.12.3        ff_2.2-13            bit_1.1-12           RSQLite_2.0         
+[16] DBI_0.7              shinyjs_0.9.1        shinythemes_1.1.1    markdown_0.8         plotly_4.7.1        
+[21] ggplot2_2.2.1        shinyBS_0.61         shiny_1.0.5         
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.13        lattice_0.20-34     class_7.3-14        assertthat_0.2.0    digest_0.6.12       ipred_0.9-6        
+ [7] mime_0.5            R6_2.2.2            plyr_1.8.4          ada_2.0-5           e1071_1.6-8         httr_1.3.1         
+[13] rlang_0.1.2         lazyeval_0.2.1      data.table_1.10.4-3 miniUI_0.1.1        extrafontdb_1.0     blob_1.1.0         
+[19] rpart_4.1-10        Matrix_1.2-7.1      labeling_0.3        splines_3.3.2       htmlwidgets_0.9     munsell_0.4.3      
+[25] httpuv_1.3.5        pkgconfig_2.0.1     htmltools_0.3.6     nnet_7.3-12         evd_2.3-2           tibble_1.3.4       
+[31] prodlim_1.6.1       MASS_7.3-48         Rttf2pt1_1.3.4      jsonlite_1.5        xtable_1.8-2        gtable_0.2.0       
+[37] magrittr_1.5        fastmatch_1.1-0     lava_1.5.1          RColorBrewer_1.1-2  tools_3.3.2         bit64_0.9-7        
+[43] glue_1.2.0          purrr_0.2.4         crosstalk_1.0.0     rsconnect_0.8.5     survival_2.39-5     yaml_2.1.14        
+[49] colorspace_1.3-2    memoise_1.1.0       bindr_0.1          
