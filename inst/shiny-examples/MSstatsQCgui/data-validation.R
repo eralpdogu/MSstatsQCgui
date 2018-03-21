@@ -41,7 +41,7 @@ clearString <- function(x){
 # same names as our suggested sample data to fit our suggested sample data
 guessColumnName <- function(x){
 
-a <- clearString(x)
+  a <- clearString(x)
 
   max_index <- 0
   max <- -1
@@ -97,8 +97,8 @@ input.sanity.check <- function(prodata, processout, finalfile) {
         error_message <- paste(error_message, "All the values of", colnames(prodata)[i], "should be numeric and positive.\n\n")
       }
       #if(sum(is.na(prodata[,i])) > 0) {
-        #null_columns <- c(null_columns,colNames[i])
-        #}
+      #null_columns <- c(null_columns,colNames[i])
+      #}
     }
   }
 
@@ -110,6 +110,8 @@ input.sanity.check <- function(prodata, processout, finalfile) {
 
   # if there is any missing value in data replace it with NA
   prodata[prodata==""] <- NA
+  levels(prodata$Annotations) = c(levels(prodata$Annotations), "Not Available")
+  prodata["Annotations"][is.na(prodata["Annotations"])] <- "Not Available"
   # some times numeric values of some users are like 333,222 which is not acceptable and we convert it to 333222 by replacing "," to ""
   # prodata[,"Full Width at Half Maximum"] <- as.numeric(gsub(",","",prodata[,"Full Width at Half Maximum"]))
   # prodata[,"Total Peak Area"] <- as.numeric(gsub(",","",prodata[,"Total Peak Area"]))
@@ -161,6 +163,8 @@ input_checking <- function(data){
   processout <- rbind(processout, as.matrix(c(" "," ","MSstatsqc - dataProcess function"," "),ncol=1))
 
   data <- input.sanity.check(data, processout, finalfile)
+
+  data <- data[complete.cases(data),] #work with complete cases
 
   return(data)
 }

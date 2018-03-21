@@ -2,13 +2,11 @@ library(shiny)
 library(shinyBS)
 library(plotly)
 library(markdown)
-library(shinythemes)
 shinyUI(fluidPage(
-  #theme = shinytheme("yeti"),
   shinyjs::useShinyjs(),
   titlePanel(title=p(strong("MSstatsQC"),align = "center",style="color:#0A4476;",style="font-size:170%;",
                style="font-family:arial;"),windowTitle = "MSstatsQC"),
-  navbarPage(h4("Longitudinal system suitability monitoring and quality control for targeted proteomic experiments",style="color:darkblue;"),
+  navbarPage(h4("Longitudinal system suitability monitoring and quality control for proteomic experiments",style="color:darkblue;"),
              ##888888
 
 #################################################################################################################
@@ -26,14 +24,13 @@ shinyUI(fluidPage(
                        br(),
                        br(),
                        br(),
-                        p("MSstatsQC is an open-source web-based software which provides longitudinal
+                        p("MSstatsQC is an R based package and a web-based software which provides longitudinal
                            system suitability monitoring tools (control charts) for proteomic experiments."),
                         h5(strong("Metrics you can monitor")),
-                        p("MSstatsQC uses control charts to monitor the instrument performance by tracking system
-                           suitability metrics including total peak area, retention time and full width at half maximum (FWHM) and peak assymetry.
-                           Additional metrics can also be analyzed by including them to the input file."),
+                        p("MSstatsQC uses control charts to monitor the instrument performance by tracking id and id-free metrics such as total peak area, retention time and full width at half maximum (FWHM) and peak assymetry.
+                           Additional metrics can also be analyzed by including them to the input file.Required input foramt is a csv file with acquired time, peptide sequence and annotations. Any metric of interest parsed  after annotations column will automatically be included in the analyses."),
                        h5(strong("Statistical functionalities")),
-                        p("This framework includes simultaneous monitoring tools for mean and dispersion of suitability metrics and presents
+                        p("This framework includes simultaneous monitoring tools for mean and dispersion of metrics and presents
                            alternative methods of monitoring such as time weighted control charts to ensure that various types
                            of process disturbances are detected effectively. Simultaneous control charts used in this framework
                            can be classified into two groups: individual-moving range (XmR) control charts and mean and dispersion
@@ -45,15 +42,15 @@ shinyUI(fluidPage(
                        p("The steps for generating results are as follows:"),
                          ("1) Import your SST/QC data "),
                          br(),
-                         ("2)	Determine the guide set to estimate metric mean and variance "),
+                         ("2)	Determine the guide set to estimate metric mean and variance or provide estimated mean and variance of each metric "),
                          br(),
-                         ("3)	Select specific precursor(s) or select all"),
+                         ("3)	Select specific peptide sequences or select all"),
                          br(),
                          ("4)	Design decision rules"),
                          br(),
                          ("5) Run and generate control charts"),
                          br(),
-                         ("6)	Check with heatmaps, metric summary plots and change point analysis for better reasoning"),
+                         ("6)	Check heatmaps, metric summary plots and change point analysis for better reasoning"),
                          br(),
                          ("7)	Navigate results and download them for your reports"),
                          br(),
@@ -134,7 +131,7 @@ shinyUI(fluidPage(
                                       column(10,
                                              uiOutput("metricSelection"),
                                              htmlOutput("metricSelectionErrorMsg")
-                                             
+
                                       )
                                     )
                                   ),
@@ -284,7 +281,7 @@ shinyUI(fluidPage(
 ###################################################################################################
               tabPanel("Help",
                        tabsetPanel(
-                         tabPanel("Metrics"
+                         tabPanel("Example metrics for quality monitoring"
                                   ,h5(strong("Retention time")),
                                   p("Retention time is the time it takes a solute to travel through the column. The retention time is assigned to
                                     the corresponding solute peak. The retention time is a measure of the amount of time a solute spends in a column.
@@ -345,13 +342,18 @@ shinyUI(fluidPage(
                                   ),
 
                          tabPanel("Documentation",
+                                  h5(strong("MSstatsQCgui Github Repository")),
+                                  p("Latest documantation is also available via our Github page"
+                                    , a("visit for more info",href="https://github.com/eralpdogu/MSstatsQCgui")),
+                                  br(),
                                   h5(strong("MSstatsQC webpage")),
                                   p("Source codes, related documents and user manual can be found via our MSstats website"
                                     , a("visit for more info",href="http://www.msstats.org/msstatsqc")),
                                   br(),
-                                  h5(strong("MSstatsQC Github")),
-                                  p("Latest documantation is also available via our Github page"
-                                    , a("visit for more info",href="https://github.com/srtaheri/msstats-qc"))
+                                  h5(strong("MSstatsQC Bioconductor")),
+                                  p("Source codes, related documents and user manual can be found via Bioconductor"
+                                    , a("visit for more info",href="https://www.bioconductor.org/packages/3.7/bioc/html/MSstatsQC.html")),
+                                  br()
                                   )
 
                                   ))

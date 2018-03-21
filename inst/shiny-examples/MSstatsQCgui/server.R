@@ -1,11 +1,3 @@
-options(shiny.maxRequestSize=100*1024^2)
-
-library(shiny)
-library(shinyBS)
-library(shinyjs)
-library(plotly)
-library(RecordLinkage)
-library(hash)
 library(gridExtra)
 library(ggExtra)
 library(markdown)
@@ -16,15 +8,9 @@ source("helper-functions.R")
 source("QCMetrics.R")
 
 shinyServer(function(input,output,session) {
-  # COL.BEST.RET <- "Retention Time"
-  # COL.FWHM <- "Full Width at Half Maximum"
-  # COL.TOTAL.AREA <- "Total Peak Area"
-  # COL.PEAK.ASS <- "Peak Assymetry"
-
 
   #### Read data  ##################################################################################################
   data <- reactiveValues(df = NULL, metrics = NULL)
-
 
   observeEvent(input$filein, {
     file1 <- input$filein
@@ -33,7 +19,6 @@ shinyServer(function(input,output,session) {
       need(!is.null(data$df), "Please upload your data"),
       need(is.data.frame(data$df), data$df)
     )
-    #data$metrics <- c(COL.BEST.RET, COL.TOTAL.AREA, COL.FWHM, COL.PEAK.ASS, find_custom_metrics(data$df))
     data$metrics <- c(find_custom_metrics(data$df))
   }, priority = 20)
 
@@ -44,7 +29,6 @@ shinyServer(function(input,output,session) {
       need(is.data.frame(data$df), data$df)
     )
 
-    #data$metrics <- c(COL.BEST.RET, COL.TOTAL.AREA, COL.FWHM, COL.PEAK.ASS, find_custom_metrics(data$df))
     data$metrics <- c(find_custom_metrics(data$df))
   }, priority = 20)
 
@@ -52,7 +36,7 @@ shinyServer(function(input,output,session) {
     data$df <- NULL
     data$metrics <- NULL
   }, priority = 20)
-  ##### Precursor type selection #####################################################################################
+##### Precursor type selection #####################################################################################
   output$pepSelect <- renderUI({
     prodata <- data$df
     validate(
@@ -60,19 +44,18 @@ shinyServer(function(input,output,session) {
       need(is.data.frame(prodata), prodata)
     )
     selectInput("pepSelection","Choose peptide"
-                #,choices = c(levels(reorder(prodata$Precursor,prodata[,COL.BEST.RET])),"all peptides")
                 ,choices = c(levels(prodata$Precursor),"all peptides")
-                )
+    )
   })
   ######Show table of data #####################################################################################################
-   output$prodata_table <- renderDataTable({  
-     validate(
-       need(!is.null(data$df), "Please upload your data.\n\n If your data contains min start time and max end time columns, the App will add a peak assymetry column automatically.\n\n Your data should contain a column named Annotation. Put all your metrics after this column.To see an example of a sample data click on the {Run with example data} button."),
-       need(is.data.frame(data$df), data$df)
-     )
-     data$df
-   }, options = list(pageLength = 25))
-###### selection tab in Data Improt and selection #####################################################
+  output$prodata_table <- renderDataTable({
+    validate(
+      need(!is.null(data$df), "Please upload your data.\n\n If your data contains min start time and max end time columns, the App will add a peak assymetry column automatically.\n\n Your data should contain a column named Annotation. Put all your metrics after this column.To see an example of a sample data click on the {Run with example data} button."),
+      need(is.data.frame(data$df), data$df)
+    )
+    data$df
+  }, options = list(pageLength = 25))
+  ###### selection tab in Data Improt and selection #####################################################
   output$selectMeanSD <- renderUI({
     lapply(input$user_selected_metrics,
            function(x){
@@ -115,10 +98,10 @@ shinyServer(function(input,output,session) {
   output$metricThresholdYellow <- renderUI({
     numOfMetrics <- length(input$user_selected_metrics)
     threshold_metric_red <- input$threshold_metric_red
-     validate(
-       need(!is.null(numOfMetrics),"loading..."),
-       need(!is.null(threshold_metric_red),"loading...")
-     )
+    validate(
+      need(!is.null(numOfMetrics),"loading..."),
+      need(!is.null(threshold_metric_red),"loading...")
+    )
 
     numericInput('threshold_metric_yellow', '', value = threshold_metric_red , min = 0, max = threshold_metric_red, step = 1)
   })
@@ -127,28 +110,6 @@ shinyServer(function(input,output,session) {
     checkboxGroupInput("user_selected_metrics","",
                        choices = c(data$metrics),
                        inline = TRUE)
-  })
-  
-  output$metricSelectionErrorMsg <- renderUI({
-  AfterannoColNum <- (which(colnames(data$df)=="Annotations")) + 1
-  null_columns <- c()
-  message <- c("This/these metrics contain NA:")
-  if(AfterannoColNum < ncol(data$df)) {
-    colNames <- colnames(data$df)
-    for(i in  AfterannoColNum:ncol(data$df)) {
-      if(sum(is.na(data$df[,i])) > 0) {
-        null_columns <- c(null_columns,colNames[i])
-      }
-    }
-  }
-  message <- HTML(paste(strong(message)))
-  for(i in 1:length(null_columns)) {
-    message <- HTML(paste(message,null_columns[i], sep = '<br/>'))
-  }
-  if(length(message) > 0) {
-    HTML(paste(message,strong("You cannot select this/these metrics for further analysis."), sep = '<br/>'))
-  }
-  
   })
 
   ################################################################# plots ###################################################
@@ -166,20 +127,20 @@ shinyServer(function(input,output,session) {
     }
     Tabs <- lapply(input$user_selected_metrics,
                    function(x) {
-                       tabPanel(x,
-                                tags$head(tags$style(type="text/css")),
-                                conditionalPanel(condition="$('html').hasClass('shiny-busy')",
-                                                 tags$div("It may take a while to load the plots, please wait...",
-                                                          id="loadmessage")),
-                                renderPlotly(render.QC.chart(data$df, input$pepSelection, input$L,
-                                                             input$U, metric = x,
-                                                             plot.method = "XmR", normalization = FALSE,
-                                                             y.title1 = "Individual Value", y.title2 = "Moving Range",
-                                                             selectMean = input[[paste0("selectMean@",x)]],selectSD = input[[paste0("selectSD@",x)]],
-                                                             guidset_selected = is_guidset_selected)
-                                             )
+                     tabPanel(x,
+                              tags$head(tags$style(type="text/css")),
+                              conditionalPanel(condition="$('html').hasClass('shiny-busy')",
+                                               tags$div("It may take a while to load the plots, please wait...",
+                                                        id="loadmessage")),
+                              renderPlotly(render.QC.chart(data$df, input$pepSelection, input$L,
+                                                           input$U, metric = x,
+                                                           plot.method = "XmR", normalization = FALSE,
+                                                           y.title1 = "Individual Value", y.title2 = "Moving Range",
+                                                           selectMean = input[[paste0("selectMean@",x)]],selectSD = input[[paste0("selectSD@",x)]],
+                                                           guidset_selected = is_guidset_selected)
+                              )
 
-                                )
+                     )
                    })
     do.call(tabsetPanel, Tabs)
 
@@ -199,13 +160,13 @@ shinyServer(function(input,output,session) {
     Tabs <- lapply(input$user_selected_metrics,
                    function(x) {
 
-                       tabPanel(x,
-                                tags$head(tags$style(type="text/css")),
-                                conditionalPanel(condition="$('html').hasClass('shiny-busy')",
-                                                 tags$div("It may take a while to load the plots, please wait...",
-                                                          id="loadmessage")),
-                                renderPlotly(render.QC.chart(data$df, input$pepSelection, input$L, input$U, metric = x, plot.method = "CUSUM", normalization = TRUE, y.title1 = "CUSUM mean", y.title2 = "CUSUM variation",selectMean = input[[paste0("selectMean@",x)]],selectSD = input[[paste0("selectSD@",x)]],guidset_selected = is_guidset_selected))
-                                )
+                     tabPanel(x,
+                              tags$head(tags$style(type="text/css")),
+                              conditionalPanel(condition="$('html').hasClass('shiny-busy')",
+                                               tags$div("It may take a while to load the plots, please wait...",
+                                                        id="loadmessage")),
+                              renderPlotly(render.QC.chart(data$df, input$pepSelection, input$L, input$U, metric = x, plot.method = "CUSUM", normalization = TRUE, y.title1 = "CUSUM mean", y.title2 = "CUSUM variation",selectMean = input[[paste0("selectMean@",x)]],selectSD = input[[paste0("selectSD@",x)]],guidset_selected = is_guidset_selected))
+                     )
                    })
 
     do.call(tabsetPanel, Tabs)
@@ -224,13 +185,13 @@ shinyServer(function(input,output,session) {
     }
     Tabs <- lapply(input$user_selected_metrics,
                    function(x) {
-                       tabPanel(x,
-                                tags$head(tags$style(type="text/css")),
-                                conditionalPanel(condition="$('html').hasClass('shiny-busy')",
-                                                 tags$div("It may take a while to load the plots, please wait...",
-                                                          id="loadmessage")),
-                                renderPlotly(render.QC.chart(data$df, input$pepSelection, input$L, input$U, metric = x, plot.method = "CP", normalization = TRUE, y.title1 = "Change point for mean", y.title2 = "Change point for variation",selectMean = input[[paste0("selectMean@",x)]],selectSD = input[[paste0("selectSD@",x)]],guidset_selected = is_guidset_selected))
-                                )
+                     tabPanel(x,
+                              tags$head(tags$style(type="text/css")),
+                              conditionalPanel(condition="$('html').hasClass('shiny-busy')",
+                                               tags$div("It may take a while to load the plots, please wait...",
+                                                        id="loadmessage")),
+                              renderPlotly(render.QC.chart(data$df, input$pepSelection, input$L, input$U, metric = x, plot.method = "CP", normalization = TRUE, y.title1 = "Change point for mean", y.title2 = "Change point for variation",selectMean = input[[paste0("selectMean@",x)]],selectSD = input[[paste0("selectSD@",x)]],guidset_selected = is_guidset_selected))
+                     )
                    })
 
     do.call(tabsetPanel, Tabs)
@@ -253,7 +214,7 @@ shinyServer(function(input,output,session) {
       my_height <- ceiling(k)*2600
     }
   })
-  
+
   my_width <- reactive({
     l = length(input$user_selected_metrics)
     if(l == 1) {
@@ -264,9 +225,9 @@ shinyServer(function(input,output,session) {
       my_width = 1200
     }
     my_width <- 1500
-    
+
   })
-  
+
   heatmap_height <- reactive({
     l <- length(input$user_selected_metrics)
     k <- length(input$heatmap_controlChart_select)
@@ -276,7 +237,7 @@ shinyServer(function(input,output,session) {
       heatmap_height <- ceiling(k)*ceiling(l)*200
     }
   })
-  
+
   heatmap_width <- reactive({
     heatmap_width <- 1000
     print(heatmap_width)
@@ -356,8 +317,8 @@ shinyServer(function(input,output,session) {
     listMean <- list()
     listSD <- list()
     for(metric in input$user_selected_metrics){
-     listMean[[metric]] <- input[[paste0("selectMean@",metric)]]
-     listSD[[metric]] <- input[[paste0("selectSD@",metric)]]
+      listMean[[metric]] <- input[[paste0("selectMean@",metric)]]
+      listSD[[metric]] <- input[[paste0("selectSD@",metric)]]
     }
 
     plots <- list()
