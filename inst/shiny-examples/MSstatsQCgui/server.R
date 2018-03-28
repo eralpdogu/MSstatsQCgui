@@ -346,6 +346,8 @@ shinyServer(function(input,output,session) {
       do.call("grid.arrange", c(plots, ncol = 1))
 
   }, height = heatmap_height, width = heatmap_width)
-
+  session$onSessionEnded(function() {
+    stopApp()
+  })
   ############################################################################################################################
 })
