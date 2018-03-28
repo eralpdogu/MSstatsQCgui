@@ -16,7 +16,7 @@ vignette: >
 
 `MSstatsQCgui` translates the modern methods of longitudinal statistical process control, such as simultaneous and time weighted control charts and change point analysis to the context of LC-MS experiments. Details can be found via [MSstatsQC](www.msstats.org/msstatsqc) website and project [github repository](https://github.com/eralpdogu/MSstatsQCgui), and are available for use stand-alone, or for integration with automated pipelines. 
 
-This vignette summarizesfunctionalities in `MSstatsQCgui` package. 
+This vignette summarizes functionalities in `MSstatsQCgui` package. 
 
 The GUI was created using [Shiny](https://shiny.rstudio.com/), 
 a Web Application Framework for R, and uses
@@ -37,7 +37,7 @@ To install the development version of the package via GitHub:
 source("https://bioconductor.org/biocLite.R")
 deps <- c("devtools")
 biocLite("devtools", dependencies = TRUE)
-devtools::install_github("eralpdogu/MSstatsQCGUI")
+devtools::install_github("eralpdogu/MSstatsQCgui")
 ```
 
 ## Quick start
@@ -45,7 +45,7 @@ devtools::install_github("eralpdogu/MSstatsQCGUI")
 The following commands should be used to start the graphical user interface.
 
 ```{r, eval = FALSE}
-library(MSstatsQCGUI)
+library(MSstatsQCgui)
 RunMSstatsQC()
 ```
 

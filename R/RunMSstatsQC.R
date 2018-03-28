@@ -4,7 +4,8 @@
 #'  This plot provides massages about overall system performance.
 #' @keywords GUI shiny
 #' @export
-#' @import shiny MSstatsQC
+#' @import shiny MSstatsQC gridExtra ggExtra markdown grDevices
+#' @import shinyBS plotly shinythemes shinyjs RecordLinkage stats
 #' @return A connection for the shiny interface
 #' @examples
 #' \dontrun{An example dataset can be found through MSstatsQC package}
@@ -17,5 +18,5 @@ RunMSstatsQC <- function() {
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `MSstatsQCgui`.", call. = FALSE)
   }
-  shiny::runApp(appDir, display.mode = "normal")
+  shiny::runApp(appDir)
 }

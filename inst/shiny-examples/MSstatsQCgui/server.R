@@ -1,6 +1,9 @@
 library(gridExtra)
 library(ggExtra)
 library(markdown)
+library(RecordLinkage)
+library(stats)
+library(grDevices)
 
 source("plot-functions.R")
 source("data-validation.R")
