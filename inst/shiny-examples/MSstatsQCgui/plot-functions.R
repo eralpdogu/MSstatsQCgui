@@ -27,7 +27,7 @@ render.QC.chart <- function(prodata, precursorSelection, L, U, metric, plot.meth
   plots <- list()
   annot_list <- list()
   if(precursorSelection == "all peptides") {
-    results <- lapply(c(1:nlevels(prodata$Precursor)), function(j) {
+    results <- lapply(c(seq_len(nlevels(prodata$Precursor))), function(j) {
       metricData <- getMetricData(prodata, precursors[j], L, U, metric = metric, normalization = normalization,selectMean,selectSD, guidset_selected)
       plots[[2*j-1]] <<- do.plot(prodata, metricData, precursors[j],L,U, plot.method, y.title1, type = 1,selectMean,selectSD, guidset_selected)
       plots[[2*j]] <<- do.plot(prodata, metricData, precursors[j],L,U, plot.method, y.title2, type = 2,selectMean,selectSD, guidset_selected)
@@ -362,7 +362,7 @@ CUSUM.Radar.Plot <- function(prodata, data.metrics, L,U,listMean,listSD,guidset_
 #########################################################################################################################
 metrics_box.plot <- function(prodata, data.metrics) {
   plots <- list()
-  for(i in 1:length(data.metrics)) {
+  for(i in seq_len(length(data.metrics))) {
     metric <- data.metrics[i]
     #precursors <- reorder(prodata$Precursor,prodata[,metric])
     precursor.data <- substring(reorder(prodata$Precursor,prodata[,metric]), first = 1, last = 10)

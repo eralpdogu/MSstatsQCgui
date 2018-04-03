@@ -107,14 +107,14 @@ ggradar <- function(plot.data,
     max.y <- max*cos(angles)
     #Combine into a set of uniquely numbered paths (one per variable)
     axisData <- NULL
-    for (i in 1:n.vars) {
+    for (i in seq_len(n.vars)) {
       a <- c(i,min.x[i],min.y[i])
       b <- c(i,max.x[i],max.y[i])
       axisData <- rbind(axisData,a,b)
     }
     #Add column names + set row names = row no. to allow conversion into a data frame
     colnames(axisData) <- c("axis.no","x","y")
-    rownames(axisData) <- seq(1:nrow(axisData))
+    rownames(axisData) <- seq(seq_len(nrow(axisData)))
     #Return calculated axis paths
     as.data.frame(axisData)
   }
@@ -152,8 +152,8 @@ ggradar <- function(plot.data,
   #axis label coordinates
   n.vars <- length(var.names)
   angles = seq(from=0, to=2*pi, by=(2*pi)/n.vars)
-  axis$label$x <- sapply(1:n.vars, function(i, x) {((grid.max+abs(centre.y))*axis.label.offset)*sin(angles[i])})
-  axis$label$y <- sapply(1:n.vars, function(i, x) {((grid.max+abs(centre.y))*axis.label.offset)*cos(angles[i])})
+  axis$label$x <- sapply(seq_len(n.vars), function(i, x) {((grid.max+abs(centre.y))*axis.label.offset)*sin(angles[i])})
+  axis$label$y <- sapply(seq_len(n.vars), function(i, x) {((grid.max+abs(centre.y))*axis.label.offset)*cos(angles[i])})
   #print(axis$label)
   # (e) Create Circular grid-lines + labels
   #caclulate the cooridinates required to plot circular grid-lines for three user-specified

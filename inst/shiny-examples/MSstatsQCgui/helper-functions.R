@@ -8,7 +8,7 @@ getPolarCoord <- function(r, matrix = F, na = F){
   x <- c()
   y <- c()
   
-  for(i in 1:length(r)){
+  for(i in seq_len(length(r))){
     
     x <- c(x, r[i] * cos(theta))
     y <- c(y, r[i] * sin(theta))

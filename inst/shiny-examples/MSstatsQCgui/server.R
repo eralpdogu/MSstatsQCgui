@@ -243,7 +243,6 @@ shinyServer(function(input,output,session) {
 
   heatmap_width <- reactive({
     heatmap_width <- 1000
-    print(heatmap_width)
   })
   ########################################################## box plot in Metric Summary tab ##########################################
   output$box_plot <- renderPlotly({

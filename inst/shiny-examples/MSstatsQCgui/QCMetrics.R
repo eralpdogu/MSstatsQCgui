@@ -30,7 +30,7 @@ getMetricData <- function(prodata, precursorSelection, L, U, metric, normalizati
     }
 
     if(sd == 0) {sd <- 0.0001}
-    metricData=scale(metricData[1:length(metricData)],mu,sd) # transformation for N(0,1) )
+    metricData=scale(metricData[seq_len(length(metricData))],mu,sd) # transformation for N(0,1) )
     return(metricData)
   } else if(normalization == FALSE){
     return(metricData)
@@ -88,14 +88,14 @@ CUSUM.data.prepare <- function(prodata, metricData, precursorSelection, type) {
     }
   }
 
-  QCno = 1:length(metricData)
-  for(i in 1:length(metricData)) {
+  QCno = seq_len(length(metricData))
+  for(i in seq_len(length(metricData))) {
     if(Cpoz[i] >= CUSUM.outrange.thld || Cpoz[i] <= -CUSUM.outrange.thld)
       outRangeInRangePoz[i] <- "OutRangeCUSUM+"
     else
       outRangeInRangePoz[i] <- "InRangeCUSUM+"
   }
-  for(i in 1:length(metricData)) {
+  for(i in seq_len(length(metricData))) {
     if(-Cneg[i] >= CUSUM.outrange.thld || -Cneg[i] <= -CUSUM.outrange.thld)
       outRangeInRangeNeg[i] <- "OutRangeCUSUM-"
     else
@@ -127,20 +127,20 @@ CP.data.prepare <- function(prodata, metricData, type) {
 
   if(type == 1) {
     ## Change point analysis for mean (Single step change model)
-    for(i in 1:(length_metricData - 1)) {
+    for(i in seq_len((length_metricData - 1))) {
       Et[i]=(length_metricData-i)*(((1/(length_metricData-i))*sum(metricData[(i+1):length_metricData]))-0)^2 #change point function
     }
-    QCno=1:(length_metricData - 1)
+    QCno=seq_len(length_metricData - 1)
   } else if(type == 2) {
     ## Change point analysis for variance (Single step change model)
-    for(i in 1:length_metricData) {
+    for(i in seq_len(length_metricData)) {
       SS[i]=metricData[i]^2
     }
-    for(i in 1:length_metricData) {
+    for(i in seq_len(length_metricData)) {
       SST[i]=sum(SS[i:length_metricData])
       Et[i]=((SST[i]/2)-((length_metricData-i+1)/2)*log(SST[i]/(length_metricData-i+1))-(length_metricData-i+1)/2) #change point function
     }
-    QCno=1:length_metricData
+    QCno=seq_len(length_metricData)
   }
   tho.hat = which(Et==max(Et)) # change point estimate
   plot.data <- data.frame(QCno,Et,tho.hat)
@@ -156,7 +156,7 @@ get_CP_tho.hat <- function(prodata, L, U, data.metrics,listMean,listSD, guidset_
   #precursors <- levels(reorder(prodata$Precursor,prodata[,COL.BEST.RET]))
   precursors <- levels(prodata$Precursor)
   for(metric in data.metrics) {
-    for (j in 1:nlevels(prodata$Precursor)) {
+    for (j in seq_len(nlevels(prodata$Precursor))) {
 
       metricData <- getMetricData(prodata, precursors[j], L, U, metric = metric, normalization = TRUE,selectMean = listMean[[metric]],selectSD = listSD[[metric]], guidset_selected)
 
@@ -188,7 +188,7 @@ XmR.data.prepare <- function(prodata, metricData, L,U, type,selectMean,selectSD,
     t[i]=abs(metricData[i]-metricData[i-1]) # Compute moving range of metricData
   }
 
-  QCno=1:length(metricData)
+  QCno=seq_len(length(metricData))
 
   if(type == 1) {
     if(guidset_selected) {
@@ -203,13 +203,13 @@ XmR.data.prepare <- function(prodata, metricData, L,U, type,selectMean,selectSD,
   } else if(type == 2) {
     ## Calculate MR chart statistics and limits
     if(guidset_selected) {
-      UCL=3.267*sd(t[1:L-U])
+      UCL=3.267*sd(t[seq_len(L)-U])
     }else{
       UCL = 3.267 * selectSD
     }
     LCL=0
   }
-  for(i in 1:length(metricData)) {
+  for(i in seq_len(length(metricData))) {
     if(t[i] > LCL && t[i] < UCL)
       InRangeOutRange[i] <- "InRange"
     else
@@ -228,7 +228,7 @@ XmR.data.prepare <- function(prodata, metricData, L,U, type,selectMean,selectSD,
 CUSUM.Summary.prepare <- function(prodata, metric, L, U,type,selectMean,selectSD, guidset_selected) {
   h <- 5
 
-  QCno <- 1:nrow(prodata)
+  QCno <- seq_len(nrow(prodata))
   y.poz <- rep(0,nrow(prodata))
   y.neg <- rep(0,nrow(prodata))
   counter <- rep(0,nrow(prodata))
@@ -236,10 +236,10 @@ CUSUM.Summary.prepare <- function(prodata, metric, L, U,type,selectMean,selectSD
   #precursors <- levels(reorder(prodata$Precursor,prodata[,COL.BEST.RET]))
   precursors <- levels(prodata$Precursor)
 
-  for(j in 1:length(precursors)) {
+  for(j in seq_len(length(precursors))) {
     metricData <- getMetricData(prodata, precursors[j], L, U, metric = metric, normalization = T,selectMean,selectSD, guidset_selected)
 
-    counter[1:length(metricData)] <- counter[1:length(metricData)]+1
+    counter[seq_len(length(metricData))] <- counter[seq_len(length(metricData))]+1
     plot.data <- CUSUM.data.prepare(prodata, metricData, precursors[j], type)
 
     sub.poz <- plot.data[plot.data$CUSUM.poz >= h | plot.data$CUSUM.poz <= -h, ]
@@ -249,10 +249,10 @@ CUSUM.Summary.prepare <- function(prodata, metric, L, U,type,selectMean,selectSD
     y.neg[sub.neg$QCno] <- y.neg[sub.neg$QCno] + 1
   }
   max_QCno <- max(which(counter!=0))
-  pr.y.poz = y.poz[1:max_QCno]/counter[1:max_QCno]
-  pr.y.neg = y.neg[1:max_QCno]/counter[1:max_QCno]
+  pr.y.poz = y.poz[seq_len(max_QCno)]/counter[seq_len(max_QCno)]
+  pr.y.neg = y.neg[seq_len(max_QCno)]/counter[seq_len(max_QCno)]
 
-  plot.data <- data.frame(QCno = rep(1:max_QCno,2),
+  plot.data <- data.frame(QCno = rep(seq_len(max_QCno),2),
                           pr.y = c(pr.y.poz, pr.y.neg),
                           group = ifelse(rep(type==1,2*max_QCno),
                                          c(rep("Mean increase",max_QCno),
@@ -280,7 +280,7 @@ CUSUM.Summary.DataFrame <- function(prodata, data.metrics, L, U,listMean,listSD,
 ############################################################################################
 #DESCRIPTION : for each metric returns a data frame of QCno, probability of out of control peptide for dispersion or mean plot
 XmR.Summary.prepare <- function(prodata, metric, L, U,type,selectMean,selectSD, guidset_selected) {
-  QCno    <- 1:nrow(prodata)
+  QCno    <- seq_len(nrow(prodata))
   y.poz <- rep(0,nrow(prodata))
   y.neg <- rep(0,nrow(prodata))
   counter <- rep(0,nrow(prodata))
@@ -288,9 +288,9 @@ XmR.Summary.prepare <- function(prodata, metric, L, U,type,selectMean,selectSD, 
   #precursors <- levels(reorder(prodata$Precursor,prodata[,COL.BEST.RET]))
   precursors <- levels(prodata$Precursor)
 
-  for(j in 1:length(precursors)) {
+  for(j in seq_len(length(precursors))) {
     metricData <- getMetricData(prodata, precursors[j], L = L, U = U, metric = metric, normalization = T,selectMean,selectSD, guidset_selected)
-    counter[1:length(metricData)] <- counter[1:length(metricData)]+1
+    counter[seq_len(length(metricData))] <- counter[seq_len(length(metricData))]+1
     plot.data <- XmR.data.prepare(prodata, metricData , L , U , type, selectMean,selectSD, guidset_selected)
 
     sub.poz <- plot.data[plot.data$t >= plot.data$UCL, ]
@@ -300,10 +300,10 @@ XmR.Summary.prepare <- function(prodata, metric, L, U,type,selectMean,selectSD, 
     y.neg[sub.neg$QCno] <- y.neg[sub.neg$QCno] + 1
   }
   max_QCno <- max(which(counter!=0))
-  pr.y.poz = y.poz[1:max_QCno]/counter[1:max_QCno]
-  pr.y.neg = y.neg[1:max_QCno]/counter[1:max_QCno]
+  pr.y.poz = y.poz[seq_len(max_QCno)]/counter[seq_len(max_QCno)]
+  pr.y.neg = y.neg[seq_len(max_QCno)]/counter[seq_len(max_QCno)]
 
-  plot.data <- data.frame(QCno = rep(1:max_QCno,2),
+  plot.data <- data.frame(QCno = rep(seq_len(max_QCno),2),
                           pr.y = c(pr.y.poz, pr.y.neg),
                           group = ifelse(rep(type==1,2*max_QCno),
                                          c(rep("Mean increase",max_QCno),
@@ -399,7 +399,7 @@ XmR.Radar.Plot.prepare <- function(prodata,L,U, metric, type,group,XmR_type,sele
   QCno.length <- c()
   QCno.out.range.poz <- c()
   QCno.out.range.neg <- c()
-  for(j in 1:length(precursors)) {
+  for(j in seq_len(length(precursors))) {
     metricData <- getMetricData(prodata, precursors[j], L = L, U = U, metric = metric, normalization = T,selectMean,selectSD, guidset_selected)
     QCno.length <- c(QCno.length,length(metricData))
     plot.data <- XmR.data.prepare(prodata, metricData , L = L, U = U, type ,selectMean,selectSD, guidset_selected)
@@ -411,7 +411,7 @@ XmR.Radar.Plot.prepare <- function(prodata,L,U, metric, type,group,XmR_type,sele
     dat <- data.frame(peptides = precursors2,
                           OutRangeQCno  = QCno.out.range.poz,
                           group         = rep(group,length(precursors)),
-                          orderby       = seq(1:length(precursors)),
+                          orderby       = seq(seq_len(length(precursors))),
                           metric        = rep(metric, length(precursors)),
                           tool          = rep("XmR",length(precursors)),
                           probability   = QCno.out.range.poz/QCno.length
@@ -420,7 +420,7 @@ XmR.Radar.Plot.prepare <- function(prodata,L,U, metric, type,group,XmR_type,sele
     dat <- data.frame(peptides = precursors2,
                           OutRangeQCno  = QCno.out.range.neg,
                           group         = rep(group,length(precursors)),
-                          orderby       = seq(1:length(precursors)),
+                          orderby       = seq(seq_len(length(precursors))),
                           metric        = rep(metric, length(precursors)),
                           tool          = rep("XmR",length(precursors)),
                           probability   = QCno.out.range.neg/QCno.length
@@ -462,7 +462,7 @@ CUSUM.Radar.Plot.prepare <- function(prodata,L,U, metric,type,group, CUSUM.type,
   
   QCno.length <- c()
   QCno.out.range <- c()
-  for(j in 1:length(precursors)) {
+  for(j in seq_len(length(precursors))) {
     metricData <- getMetricData(prodata, precursors[j], L = L, U = U, metric = metric, normalization = T,selectMean,selectSD, guidset_selected)
     QCno.length <- c(QCno.length,length(metricData))
     plot.data <- CUSUM.data.prepare(prodata, metricData, precursors[j], type)
@@ -475,7 +475,7 @@ CUSUM.Radar.Plot.prepare <- function(prodata,L,U, metric,type,group, CUSUM.type,
   dat <- data.frame(peptides = precursors2,
                     OutRangeQCno  = QCno.out.range,
                     group         = rep(group,length(precursors)),
-                    orderby       = seq(1:length(precursors)),
+                    orderby       = seq(seq_len(length(precursors))),
                     metric        = rep(metric, length(precursors)),
                     tool          = rep("XmR",length(precursors)),
                     probability   = QCno.out.range/QCno.length
@@ -503,7 +503,7 @@ Decision.DataFrame.prepare <- function(prodata, metric, method, peptideThreshold
                                        L, U,type,selectMean,selectSD, guidset_selected) {
   h <- 5
   AcquiredTime <- prodata$AcquiredTime
-  QCno    <- 1:nrow(prodata)
+  QCno    <- seq_len(nrow(prodata))
   y <- rep(0,nrow(prodata))
   counter <- rep(0,nrow(prodata))
 
@@ -512,7 +512,7 @@ Decision.DataFrame.prepare <- function(prodata, metric, method, peptideThreshold
   if(method == "XmR") {
     for(precursor in precursors) {
       metricData <- getMetricData(prodata, precursor, L = L, U = U, metric = metric, normalization = T,selectMean,selectSD, guidset_selected)
-      counter[1:length(metricData)] <- counter[1:length(metricData)]+1
+      counter[seq_len(length(metricData))] <- counter[seq_len(length(metricData))]+1
       plot.data <- XmR.data.prepare(prodata, metricData , L , U , type,selectMean,selectSD, guidset_selected)
       sub <- plot.data[plot.data$InRangeOutRange == "OutRange",]
       #sub1 <- plot.data[(plot.data$t >= plot.data$UCL), ]
@@ -523,7 +523,7 @@ Decision.DataFrame.prepare <- function(prodata, metric, method, peptideThreshold
   } else if(method == "CUSUM") {
     for(precursor in precursors) {
       metricData <- getMetricData(prodata, precursor, L = L, U = U, metric = metric, normalization = T,selectMean,selectSD, guidset_selected)
-      counter[1:length(metricData)] <- counter[1:length(metricData)]+1
+      counter[seq_len(length(metricData))] <- counter[seq_len(length(metricData))]+1
       plot.data <- CUSUM.data.prepare(prodata, metricData, precursor, type)
       sub <- plot.data[(plot.data$CUSUM.poz >= h | plot.data$CUSUM.poz <= -h) | (plot.data$CUSUM.neg >= h | plot.data$CUSUM.neg <= -h), ]
       #sub2 <- plot.data[plot.data$CUSUM.neg >= h | plot.data$CUSUM.neg <= -h, ]
@@ -533,11 +533,11 @@ Decision.DataFrame.prepare <- function(prodata, metric, method, peptideThreshold
   }
   max_QCno <- max(which(counter!=0))
 
-  pr.y = y[1:max_QCno]/counter[1:max_QCno]
+  pr.y = y[seq_len(max_QCno)]/counter[seq_len(max_QCno)]
 
 
-    plot.data <- data.frame(AcquiredTime = AcquiredTime[1:max_QCno],
-                            QCno = rep(1:max_QCno,1),
+    plot.data <- data.frame(AcquiredTime = AcquiredTime[seq_len(max_QCno)],
+                            QCno = rep(seq_len(max_QCno),1),
                             pr.y = pr.y,
                             group = ifelse(rep(type==1,max_QCno),
                                            rep("Metric mean",max_QCno),
@@ -551,7 +551,7 @@ Decision.DataFrame.prepare <- function(prodata, metric, method, peptideThreshold
 
 
 
-  for (i in 1:max_QCno) {
+  for (i in seq_len(max_QCno)) {
     if(plot.data$pr.y[i] > peptideThresholdRed){
       plot.data$flag[i] <- "Fail"
     }
@@ -583,12 +583,12 @@ Decision.DataFrame.prepare <- function(prodata, metric, method, peptideThreshold
   #### check prodata$Precursor vs levels(preata$Precursor) in for
   for (metric in data.metrics) {
 
-  QCno    <- 1:nrow(prodata)
+  QCno    <- seq_len(nrow(prodata))
   y <- rep(0,nrow(prodata))
   counter <- rep(0,nrow(prodata))
   for(precursor in precursors) {
     metricData <- getMetricData(prodata, precursor, L = L, U = U, metric = metric, normalization = T,listMean[[metric]],listSD[[metric]], guidset_selected)
-    counter[1:length(metricData)] <- counter[1:length(metricData)]+1
+    counter[seq_len(length(metricData))] <- counter[seq_len(length(metricData))]+1
     #if(method == "XmR") {
       plot.data <- XmR.data.prepare(prodata, metricData , L , U , type,selectMean = listMean[[metric]],selectSD = listSD[[metric]], guidset_selected)
     #}
@@ -597,7 +597,7 @@ Decision.DataFrame.prepare <- function(prodata, metric, method, peptideThreshold
     y[sub$QCno] <- y[sub$QCno] + 1
   }
   max_QCno <- max(which(counter!=0))
-  pr.y = y[1:max_QCno]/counter[1:max_QCno]
+  pr.y = y[seq_len(max_QCno)]/counter[seq_len(max_QCno)]
 
   if(type == 2) {
     pr.y <- pr.y[-1]

@@ -45,9 +45,9 @@ guessColumnName <- function(x){
 
   max_index <- 0
   max <- -1
-  for(i in 1:length(best_colnames)){
+  for(i in seq_len(length(best_colnames))){
     col <- best_colnames[[i]]
-    for(j in 1:length(col)){
+    for(j in seq_len(length(col))){
       sim <- levenshteinSim(a,clearString(col[j]))
       if(sim > max){
         max <- sim
