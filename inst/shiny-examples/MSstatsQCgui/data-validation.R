@@ -158,7 +158,7 @@ input_checking <- function(data){
   sink()
 
   processout <- as.matrix(read.table("./log/sessionInfo.txt", header=T, sep="\t"))
-  write.table(processout, file=finalfile, row.names=FALSE)
+  #write.table(processout, file=finalfile, row.names=FALSE)
 
   processout <- rbind(processout, as.matrix(c(" "," ","MSstatsqc - dataProcess function"," "),ncol=1))
 
