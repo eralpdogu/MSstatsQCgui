@@ -63,7 +63,7 @@ guessColumnName <- function(x){
   }
 }
 #############################################################################################################
-input.sanity.check <- function(prodata, processout, finalfile) {
+input.sanity.check <- function(prodata) {
   error_message <- ""
   null_columns <- c()
 
@@ -132,24 +132,24 @@ input.sanity.check <- function(prodata, processout, finalfile) {
 input_checking <- function(data){
 
   ## save process output in each step #### creating a log file ########### from Meena's code
-  allfiles <- list.files()
-
-  num <- 0
-  filenaming <- "./log/msstatsqc"
-  finalfile <- "msstatsqc.log"
-
-  while(is.element(finalfile,allfiles)) {
-    num <- num+1
-    finalfile <- paste(paste(filenaming,num,sep="-"),".log",sep="")
-  }
+#   allfiles <- list.files()
+# 
+#   num <- 0
+#   filenaming <- "./log/msstatsqc"
+#   finalfile <- "msstatsqc.log"
+# 
+#   while(is.element(finalfile,allfiles)) {
+#     num <- num+1
+#     finalfile <- paste(paste(filenaming,num,sep="-"),".log",sep="")
+#   }
 
   #processout <- as.matrix(read.table("./log/sessionInfo.txt", header=T, sep="\t"))
   
   #write.table(processout, file=finalfile, row.names=FALSE)
 
-  processout <- rbind(processout, as.matrix(c(" "," ","MSstatsqc - dataProcess function"," "),ncol=1))
+  #processout <- rbind(processout, as.matrix(c(" "," ","MSstatsqc - dataProcess function"," "),ncol=1))
 
-  data <- input.sanity.check(data, processout, finalfile)
+  data <- input.sanity.check(data)
 
   data <- data[complete.cases(data),] #work with complete cases
 
