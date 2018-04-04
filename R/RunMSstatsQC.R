@@ -4,8 +4,8 @@
 #'  This plot provides massages about overall system performance.
 #' @keywords GUI shiny
 #' @export
-#' @import shiny MSstatsQC gridExtra ggExtra markdown grDevices
-#' @import shinyBS plotly shinythemes shinyjs stats
+#' @importFrom stats filter
+#' @importFrom shiny runExample
 #' @return A connection for the shiny interface
 #' @examples
 #' \dontrun{An example dataset can be found through MSstatsQC package}
