@@ -5,7 +5,7 @@
 #' @keywords GUI shiny
 #' @export
 #' @import shiny MSstatsQC gridExtra ggExtra markdown grDevices
-#' @import shinyBS plotly shinythemes shinyjs RecordLinkage stats
+#' @import shinyBS plotly shinythemes shinyjs stats
 #' @return A connection for the shiny interface
 #' @examples
 #' \dontrun{An example dataset can be found through MSstatsQC package}

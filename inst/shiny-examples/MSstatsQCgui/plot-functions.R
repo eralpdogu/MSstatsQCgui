@@ -1,15 +1,6 @@
 source("QCMetrics.R")
 source('ggradar.R')
 source('helper-functions.R')
-
-library(dplyr)
-library(ggplot2)
-library(scales)
-library(grid)
-library(tidyr)
-library(viridis)
-library(extrafont)
-
 #################################################################################################################
 #INPUT : "prodata" is the data user uploads.
 #        "precursorSelection" is the precursor that user selects in Data Import tab. it can be either one precursor(peptide) or it can be "all peptides"
