@@ -1,9 +1,4 @@
-library(shiny)
-library(shinyBS)
-library(plotly)
-library(markdown)
-library(shinythemes)
-library(shinyjs)
+
 shinyUI(fluidPage(
   shinyjs::useShinyjs(),
   titlePanel(title=p(strong("MSstatsQC"),align = "center",style="color:#0A4476;",style="font-size:170%;",

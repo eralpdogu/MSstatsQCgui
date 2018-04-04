@@ -4,6 +4,8 @@
 #'  This plot provides massages about overall system performance.
 #' @keywords GUI shiny
 #' @export
+#' @importFrom gridExtra combine
+#' @importFrom viridis viridis_pal
 #' @importFrom stats filter
 #' @importFrom shiny runExample
 #' @return A connection for the shiny interface
