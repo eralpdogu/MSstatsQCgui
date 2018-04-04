@@ -112,16 +112,8 @@ input.sanity.check <- function(prodata, processout, finalfile) {
   prodata[prodata==""] <- NA
   levels(prodata$Annotations) = c(levels(prodata$Annotations), "Not Available")
   prodata["Annotations"][is.na(prodata["Annotations"])] <- "Not Available"
-  # some times numeric values of some users are like 333,222 which is not acceptable and we convert it to 333222 by replacing "," to ""
-  # prodata[,"Full Width at Half Maximum"] <- as.numeric(gsub(",","",prodata[,"Full Width at Half Maximum"]))
-  # prodata[,"Total Peak Area"] <- as.numeric(gsub(",","",prodata[,"Total Peak Area"]))
-  # prodata[,"Retention Time"] <- as.numeric(gsub(",","",prodata[,"Retention Time"]))
-  # prodata$MaxEndTime <- as.numeric(gsub(",","",prodata$MaxEndTime))
-  # prodata$MinStartTime <- as.numeric(gsub(",","",prodata$MinStartTime))
-
 
   # some data migh have annotation column, some might not have. If it doesn't, we create an empty "Annotation" column at the very end column of the data
-
 
   # Define peak assymetry
   if("MinStartTime" %in% provided_column_names && "MaxEndTime" %in% provided_column_names) {
@@ -134,7 +126,6 @@ input.sanity.check <- function(prodata, processout, finalfile) {
   }
 
   return(prodata)
-
 }
 
 ### Input_checking function #########################################################################################
@@ -152,12 +143,8 @@ input_checking <- function(data){
     finalfile <- paste(paste(filenaming,num,sep="-"),".log",sep="")
   }
 
-  session <- sessionInfo()
-  sink("./log/sessionInfo.txt")
-  print(session)
-  sink()
-
-  processout <- as.matrix(read.table("./log/sessionInfo.txt", header=T, sep="\t"))
+  #processout <- as.matrix(read.table("./log/sessionInfo.txt", header=T, sep="\t"))
+  
   #write.table(processout, file=finalfile, row.names=FALSE)
 
   processout <- rbind(processout, as.matrix(c(" "," ","MSstatsqc - dataProcess function"," "),ncol=1))
