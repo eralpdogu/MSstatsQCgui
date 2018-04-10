@@ -4,10 +4,13 @@
 #'  This plot provides massages about overall system performance.
 #' @keywords GUI shiny
 #' @export
-#' @importFrom gridExtra combine
-#' @importFrom viridis viridis_pal
-#' @importFrom stats filter
-#' @importFrom shiny runExample
+#' @import shiny shinyBS shinythemes MSstatsQC RecordLinkage
+#' @import markdown grDevices scales gridExtra tidyr extrafont
+#' @import plotly 
+#' @importFrom ggExtra removeGrid rotateTextX
+#' @importFrom dplyr combine
+#' @importFrom scales viridis_pal
+#' @importFrom dplyr combine filter
 #' @return A connection for the shiny interface
 #' @examples
 #' \dontrun{An example dataset can be found through MSstatsQC package}

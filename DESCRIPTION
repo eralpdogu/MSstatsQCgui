@@ -12,7 +12,8 @@ LazyData: TRUE
 URL: http://msstats.org/msstatsqc
 BugReports: https://groups.google.com/forum/#!forum/msstatsqc
 RoxygenNote: 6.0.1.9000
-Imports: shiny, shinyBS, shinyjs, shinythemes, MSstatsQC, ggExtra, gridExtra, markdown, plotly, grDevices, dplyr, scales, grid, tidyr, viridis, extrafont
+Imports: shiny, shinyBS, shinythemes, MSstatsQC, ggExtra, gridExtra,
+ markdown, plotly, grDevices, dplyr, scales, grid, tidyr, viridis, extrafont, RecordLinkage
 Suggests: knitr
 VignetteBuilder: knitr
 biocViews: Software, QualityControl, Proteomics, MassSpectrometry, GUI
