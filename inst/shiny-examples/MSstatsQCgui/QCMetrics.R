@@ -38,7 +38,7 @@ getMetricData <- function(prodata, precursorSelection, L, U, metric, normalizati
 find_custom_metrics <- function(prodata) {
 
     prodata <- prodata[, which(colnames(prodata)=="Annotations"):ncol(prodata),drop = FALSE]
-    nums <- sapply(prodata, is.numeric)
+    nums <- vapply(prodata, is.numeric, FUN.VALUE = logical(1))
     other.metrics <- colnames(prodata[,nums])[1:ifelse(length(colnames(prodata[,nums]))<31,
                                                        length(colnames(prodata[,nums])),
                                                        30)

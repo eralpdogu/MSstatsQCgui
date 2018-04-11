@@ -2,8 +2,6 @@
 #' @keywords GUI shiny
 #' @export
 #' @import shiny 
-#' @import shinyBS 
-#' @import shinythemes 
 #' @import MSstatsQC 
 #' @import RecordLinkage
 #' @import plotly 

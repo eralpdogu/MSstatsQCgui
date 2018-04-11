@@ -12,7 +12,7 @@ LazyData: TRUE
 URL: http://msstats.org/msstatsqc
 BugReports: https://groups.google.com/forum/#!forum/msstatsqc
 RoxygenNote: 6.0.1.9000
-Imports: shiny, shinyBS, shinythemes, MSstatsQC, ggExtra, gridExtra,
+Imports: shiny, MSstatsQC, ggExtra, gridExtra,
  plotly, dplyr, RecordLinkage, grid
 Suggests: knitr
 VignetteBuilder: knitr

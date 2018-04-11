@@ -1,6 +1,7 @@
 
 if (!"package:MSstatsQCgui" %in% search())
-  import_fs("MSstatsQCgui", incl = c("dplyr","plotly","RecordLinkage","ggExtra","gridExtra","grid"))
+  import_fs("MSstatsQCgui", incl = c("shiny","shinyBS","dplyr","plotly","RecordLinkage","ggExtra","gridExtra","grid"))
+library(shiny)
 library(plotly)
 library(RecordLinkage)
 library(dplyr)
