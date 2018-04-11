@@ -1,4 +1,13 @@
 
+if (!"package:MSstatsQCgui" %in% search())
+  import_fs("MSstatsQCgui", incl = c("dplyr","plotly","RecordLinkage","ggExtra","gridExtra","grid"))
+library(plotly)
+library(RecordLinkage)
+library(dplyr)
+library(ggExtra)
+library(gridExtra)
+library(grid)
+
 shinyUI(fluidPage(
   shinyjs::useShinyjs(),
   titlePanel(title=p(strong("MSstatsQC"),align = "center",style="color:#0A4476;",style="font-size:170%;",

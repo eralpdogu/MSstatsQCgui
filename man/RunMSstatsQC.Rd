@@ -10,8 +10,7 @@ RunMSstatsQC()
 A connection for the shiny interface
 }
 \description{
-This function allows you to draw the heatmaps to help user test their decision intervals.
- This plot provides massages about overall system performance.
+Shiny connection for example datasets
 }
 \examples{
 \dontrun{An example dataset can be found through MSstatsQC package}

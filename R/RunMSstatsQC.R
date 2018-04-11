@@ -1,16 +1,16 @@
 #' Shiny connection for example datasets
-#'
-#' This function allows you to draw the heatmaps to help user test their decision intervals.
-#'  This plot provides massages about overall system performance.
 #' @keywords GUI shiny
 #' @export
-#' @import shiny shinyBS shinythemes MSstatsQC RecordLinkage
-#' @import markdown grDevices scales gridExtra tidyr extrafont
+#' @import shiny 
+#' @import shinyBS 
+#' @import shinythemes 
+#' @import MSstatsQC 
+#' @import RecordLinkage
 #' @import plotly 
+#' @import grid
 #' @importFrom ggExtra removeGrid rotateTextX
-#' @importFrom dplyr combine
-#' @importFrom scales viridis_pal
-#' @importFrom dplyr combine filter
+#' @importFrom gridExtra combine
+#' @importFrom dplyr filter
 #' @return A connection for the shiny interface
 #' @examples
 #' \dontrun{An example dataset can be found through MSstatsQC package}
@@ -19,9 +19,11 @@
 #' \dontrun{RunMSstatsQC()}
 
 RunMSstatsQC <- function() {
+  
   appDir <- system.file("shiny-examples", "MSstatsQCgui", package = "MSstatsQCgui")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `MSstatsQCgui`.", call. = FALSE)
   }
   shiny::runApp(appDir)
+  
 }
