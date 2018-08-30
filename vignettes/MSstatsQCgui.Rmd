@@ -27,16 +27,18 @@ such as [shinyjs](https://github.com/daattali/shinyjs). A running version of the
 To install the package from the [Bioconductor repository](http://bioconductor.org/packages/MSstatsQCGUI/) please use the following
 code. 
 ```{r,eval=FALSE}
-source("https://bioconductor.org/biocLite.R")
-biocLite("MSstatsQCgui")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("MSstatsQCgui")
 ```
 
 To install the development version of the package via GitHub:
 
 ```{r, eval = FALSE}
-source("https://bioconductor.org/biocLite.R")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
 deps <- c("devtools")
-biocLite("devtools", dependencies = TRUE)
+BiocManager::install("devtools", dependencies = TRUE)
 devtools::install_github("eralpdogu/MSstatsQCgui")
 ```
 
