@@ -1,5 +1,5 @@
 Package: MSstatsQCgui
-Version: 1.3.0
+Version: 1.3.1
 Type: Package
 Title: A graphical user interface for MSstatsQC package
 Authors@R: c(
@@ -16,4 +16,4 @@ Imports: shiny, MSstatsQC, ggExtra, gridExtra,
  plotly, dplyr, RecordLinkage, grid
 Suggests: knitr
 VignetteBuilder: knitr
-biocViews: Software, QualityControl, Proteomics, MassSpectrometry, GUI
+biocViews: ImmunoOncology, Software, QualityControl, Proteomics, MassSpectrometry, GUI
