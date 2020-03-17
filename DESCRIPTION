@@ -16,4 +16,4 @@ Imports: shiny, MSstatsQC, ggExtra, gridExtra,
  plotly, dplyr, grid
 Suggests: knitr
 VignetteBuilder: knitr
-biocViews: Software, QualityControl, Proteomics, MassSpectrometry, GUI
+biocViews: ImmunoOncology, Software, QualityControl, Proteomics, MassSpectrometry, GUI
