@@ -2,7 +2,6 @@
 
 export(RunMSstatsQC)
 import(MSstatsQC)
-import(RecordLinkage)
 import(grid)
 import(plotly)
 import(shiny)

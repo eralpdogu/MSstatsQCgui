@@ -37,38 +37,38 @@ clearString <- function(x){
 }
 #### guessColumnName function ###########################################################################################
 
-# This function receives the data and check the column names of data and changes the column names if it is not the
-# same names as our suggested sample data to fit our suggested sample data
-guessColumnName <- function(x){
-
-  a <- clearString(x)
-
-  max_index <- 0
-  max <- -1
-  for(i in seq_len(length(best_colnames))){
-    col <- best_colnames[[i]]
-    for(j in seq_len(length(col))){
-      sim <- levenshteinSim(a,clearString(col[j]))
-      if(sim > max){
-        max <- sim
-        max_index <- i
-      }
-    }
-  }
-  if (max > 0.6) {
-    return(best_colnames[[max_index]][1])
-  }
-  else {
-    return(x)
-  }
-}
+# # This function receives the data and check the column names of data and changes the column names if it is not the
+# # same names as our suggested sample data to fit our suggested sample data
+# guessColumnName <- function(x){
+#
+#   a <- clearString(x)
+#
+#   max_index <- 0
+#   max <- -1
+#   for(i in seq_len(length(best_colnames))){
+#     col <- best_colnames[[i]]
+#     for(j in seq_len(length(col))){
+#       sim <- levenshteinSim(a,clearString(col[j]))
+#       if(sim > max){
+#         max <- sim
+#         max_index <- i
+#       }
+#     }
+#   }
+#   if (max > 0.6) {
+#     return(best_colnames[[max_index]][1])
+#   }
+#   else {
+#     return(x)
+#   }
+# }
 #############################################################################################################
 input.sanity.check <- function(prodata) {
   error_message <- ""
   null_columns <- c()
 
   # get the column names and change them to the column names that we want (For example we want Retention Time but a user might use RT, this function auotomatically change RT to Retention Time)
-  colnames(prodata) <- unlist(lapply(colnames(prodata), function(x)guessColumnName(x)))
+  # colnames(prodata) <- unlist(lapply(colnames(prodata), function(x)guessColumnName(x)))
 
 
   ### conditions
@@ -133,18 +133,18 @@ input_checking <- function(data){
 
   ## save process output in each step #### creating a log file ########### from Meena's code
 #   allfiles <- list.files()
-# 
+#
 #   num <- 0
 #   filenaming <- "./log/msstatsqc"
 #   finalfile <- "msstatsqc.log"
-# 
+#
 #   while(is.element(finalfile,allfiles)) {
 #     num <- num+1
 #     finalfile <- paste(paste(filenaming,num,sep="-"),".log",sep="")
 #   }
 
   #processout <- as.matrix(read.table("./log/sessionInfo.txt", header=T, sep="\t"))
-  
+
   #write.table(processout, file=finalfile, row.names=FALSE)
 
   #processout <- rbind(processout, as.matrix(c(" "," ","MSstatsqc - dataProcess function"," "),ncol=1))
