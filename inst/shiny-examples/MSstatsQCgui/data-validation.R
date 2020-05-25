@@ -36,14 +36,12 @@ clearString <- function(x){
   return(tolower(punc_remove(camelCaseSplit(x))))
 }
 #### guessColumnName function ###########################################################################################
-
-<<<<<<< HEAD
 # This function receives the data and check the column names of data and changes the column names if it is not the
 # same names as our suggested sample data to fit our suggested sample data
-=======
+
 # # This function receives the data and check the column names of data and changes the column names if it is not the
 # # same names as our suggested sample data to fit our suggested sample data
->>>>>>> origin/master
+
 # guessColumnName <- function(x){
 #
 #   a <- clearString(x)
